@@ -17,11 +17,11 @@ contract SecureIPFSStorageTest is Test {
     function test_deleteDocument() public {
         sipfss.deleteDocument(0);
     }
-    function test_getDocumentCount() public {
+    function test_getDocumentCount() public view {
         sipfss.getDocumentCount();
         assertEq(sipfss.getDocumentCount(),1);
     }
-    function test_getDocument() public {
+    function test_getDocument() public view {
         sipfss.getDocument(0);
     }
 }
