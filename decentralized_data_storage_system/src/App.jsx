@@ -13,7 +13,7 @@ export default function ConnectWallet() {
   //get did
   const [mydid,setMyDid]=useState("");
   // datastorage
-  const [dataHash, setDataHash] = useState("");
+  const [title, setTitle] = useState("");
   const [ipfsLink, setIpfsLink] = useState("");
   const [ownerDID, setOwnerDID] = useState("");
   //grant access
@@ -54,52 +54,22 @@ export default function ConnectWallet() {
     }
   };
 
-  // Register DID Function
-  const registerDID = async () => {
-    if (!contract || !did) return alert("Please connect wallet and enter a DID");
-    
-    try {
-      // const tx = await contract.registerDID(did, { gasLimit: 100000 });
-      const tx = await contract.registerDID(did);
-      await tx.wait();
-      alert("DID Registered Successfully");
-    } catch (error) {
-      console.error("DID Registration failed", error);
-      alert("Failed to register DID");
-    }
-  };
-//getDID
-  const getDID = async () => {
-    if (!contract || !account) return alert("Please connect wallet first");
-  
-    try {
-      const userDID = await contract.addressToDID(account);
-      console.log("User's DID:", userDID);
-      setMyDid(userDID);
-      if(!userDID)alert("please add/create your DID")
-    } catch (error) {
-      console.error("Failed to fetch DID", error);
-      alert("Error fetching DID");
-    }
-  };
-  
-
     // Store Genomic Data Function
-    const storeGenomicData = async () => {
-      if (!contract || !dataHash || !ipfsLink )
+    const storeDocument = async () => {
+      if (!contract || !title || !ipfsLink )
         return alert("Please connect wallet and fill all fields");
   
       try {
-        const cleanDataHash = dataHash.trim();
+        const cleanTitle = title.trim();
         const cleanIpfsLink = ipfsLink.trim();
 
-        const tx = await contract.storeGenomicData(cleanDataHash, cleanIpfsLink);
+        const tx = await contract.storeDocument(cleanTitle, cleanIpfsLink);
 
         await tx.wait();
-        alert("Genomic data stored successfully!");
+        alert("Data stored successfully!");
       } catch (error) {
         console.error("Storage failed", error);
-        alert("Failed to store genomic data");
+        alert("Failed to store Data");
       }
     };
 
@@ -211,41 +181,13 @@ export default function ConnectWallet() {
         {account ? `Connected: ${account.slice(0, 6)}...${account.slice(-4)}` : "Connect Wallet"}
       </button>
 
-      {account &&!mydid && (
-        <div>
-          <h2>Register DID</h2>
-          <input
-            type="text"
-            placeholder="Enter DID"
-            value={did}
-            onChange={(e) => setDid(e.target.value)}
-          />
-          <button onClick={registerDID}>Register DID</button>
-        </div>
-      )}
-
-      {account && (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-        <div className="bg-white shadow-lg rounded-lg p-6 w-96">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Get DID</h2>
-          <p>{mydid }</p>
-          {!mydid &&<button
-            onClick={getDID}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-          >
-            My DID
-          </button>
-}
-          
-        </div>
-      </div>
-      )}
+     
       {account && (
         <div>
-          <h2>Store Genomic Data</h2>
+          <h2>Store Personal Data</h2>
           <input
             type="text"
-            placeholder="Enter Data Hash"
+            placeholder="Enter title"
             value={dataHash}
             onChange={(e) => setDataHash(e.target.value)}
             style={{ display: "block", margin: "10px auto", padding: "8px" }}
@@ -257,7 +199,7 @@ export default function ConnectWallet() {
             onChange={(e) => setIpfsLink(e.target.value)}
             style={{ display: "block", margin: "10px auto", padding: "8px" }}
           />
-          <button onClick={storeGenomicData}>Store Data</button>
+          <button onClick={storeDocument}>Store Data</button>
           </div>
       )}
           {/* {Grant Access} */}
@@ -326,7 +268,7 @@ export default function ConnectWallet() {
             type="text"
             placeholder="Enter Data Hash"
             value={dataHash}
-            onChange={(e) => setDataHash(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
             style={{ display: "block", margin: "10px auto", padding: "8px" }}
           />
           <button onClick={verifyData}>Verify Data</button>
@@ -370,11 +312,11 @@ export default function ConnectWallet() {
 
           {records.length > 0 && (
             <div>
-              <h3>Genomic Records</h3>
+              <h3>My Records</h3>
               {records.map((record, index) => (
                 <div key={index} style={{ border: "1px solid #ccc", margin: "10px", padding: "10px" }}>
                   <p><strong>ID:</strong> {record.recordId}</p>
-                  <p><strong>Data Hash:</strong> {record.dataHash}</p>
+                  <p><strong>Data Hash:</strong> {record.dataTitle}</p>
                   <p><strong>Owner DID:</strong> {record.ownerDID}</p>
                   {ipfsLinks[record.recordId] ? (
             <p><strong>IPFS Link:</strong> <a href={ipfsLinks[record.recordId]} target="_blank" rel="noopener noreferrer">View File</a></p>
