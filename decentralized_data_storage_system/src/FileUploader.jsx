@@ -25,7 +25,13 @@ export default function FileUploader() {
 
       {cid && (
         <div>
-          <p><strong>IPFS CID:</strong> {cid}</p>
+          <p><strong>IPFS CID:</strong> {cid} <button
+  onClick={() => {
+    navigator.clipboard.writeText(cid);
+    alert("📋 IPFS CID copied to clipboard!");
+  }}
+  style={{ marginLeft: "15px" }}
+>📋</button></p>
           <a
             href={`https://gateway.pinata.cloud/ipfs/${cid}`}
             target="_blank"
