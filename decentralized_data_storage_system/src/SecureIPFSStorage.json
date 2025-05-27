@@ -1,0 +1,145 @@
+{
+  "abi": [
+	{
+		"inputs": [],
+		"name": "DocumentIndexOutOfBounds",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "InvalidIndex",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "StorageLimitReached",
+		"type": "error"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "DocumentDeleted",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "encryptedIpfsHash",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "title",
+				"type": "string"
+			}
+		],
+		"name": "DocumentStored",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "MAX_DOCUMENTS_PER_USER",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_index",
+				"type": "uint256"
+			}
+		],
+		"name": "deleteDocument",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_index",
+				"type": "uint256"
+			}
+		],
+		"name": "getDocument",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "encryptedIpfsHash",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "title",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getDocumentCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "count",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_encryptedIpfsHash",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_title",
+				"type": "string"
+			}
+		],
+		"name": "storeDocument",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+],
+  "address": "0x759AbD8Dfb1950aa411528fee18423ba6253353E"
+}
