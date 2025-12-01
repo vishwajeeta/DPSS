@@ -31,6 +31,7 @@ export default function IPFSStorageApp() {
 
   // Store document
   const storeDocument = async () => {
+     if (!account) return alert("Please connect to the wallet");
     if (!contract || !ipfsHash || !title) return alert("All fields required");
 
     try {
@@ -46,6 +47,8 @@ export default function IPFSStorageApp() {
 
   // Fetch documents
   const fetchDocuments = async () => {
+    if (!account) return alert("Please connect to the wallet");
+
     if (!contract || !account) return;
 
     try {
@@ -65,6 +68,8 @@ export default function IPFSStorageApp() {
 
   // Delete a document
   const deleteDocument = async (index) => {
+     if (!account) return alert("Please connect to the wallet");
+
     if (!contract) return;
 
     try {
@@ -82,6 +87,9 @@ export default function IPFSStorageApp() {
     if (account) {
       fetchDocuments();
     }
+    else{
+      connectWallet();
+    }
   }, [account]);
 
   return (
@@ -89,8 +97,8 @@ export default function IPFSStorageApp() {
   style={{
     minHeight: "100vh",
     width: "100vw", // full screen width
-    backgroundColor: "#0f172a", // dark blue background
-    padding: "40px 20px",
+    backgroundColor: "#9eb5ecff", // dark blue background
+    padding: "10px 10px",
     color: "#e2e8f0", // light slate text
     fontFamily: "'Segoe UI', sans-serif",
     boxSizing: "border-box", // ensures padding doesn't overflow viewport
@@ -98,9 +106,10 @@ export default function IPFSStorageApp() {
 >
 
 
-  <div style={{ textAlign: "center" }}>
-    <h1 style={{ color: "#3b82f6", fontSize: "32px", marginBottom: "20px" }}>
-      🚀 Decentralized Data Storage System
+  <div style={{ textAlign: "center", width:"98%", display:"flex",  justifyContent:"space-between",alignItems:"center"}}>
+   
+    <h1 style={{ color: "#3b82f6", fontSize: "32px"}}>
+      <spam style={{color:"white"}}>📦🔗📜</spam> Decentralized Data Storage System
     </h1>
 
     <button
@@ -115,7 +124,6 @@ export default function IPFSStorageApp() {
         fontSize: "15px",
         cursor: "pointer",
         transition: "background-color 0.3s",
-        marginBottom: "40px",
       }}
       onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#2563eb")}
       onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#3b82f6")}
@@ -126,7 +134,7 @@ export default function IPFSStorageApp() {
     </button>
   </div>
 
-      {account && (
+    
         <div
   style={{
     maxWidth: "500px",
@@ -134,13 +142,13 @@ export default function IPFSStorageApp() {
     padding: "30px",
     borderRadius: "14px",
     boxShadow: "0 8px 30px rgba(0, 0, 0, 0.3)",
-    backgroundColor: "#0f172a", // dark slate
+    backgroundColor: "#295fdfff", // dark slate
     textAlign: "center",
     color: "#e2e8f0", // light slate text
     fontFamily: "'Segoe UI', sans-serif",
   }}
 >
-  <h2 style={{ marginBottom: "24px", color: "#3b82f6", fontWeight: 600 }}>
+  <h2 style={{ marginBottom: "24px", color: "#a3c2f8ff", fontWeight: 600 }}>
     📁 Upload & Store Document
   </h2>
 
@@ -158,11 +166,11 @@ export default function IPFSStorageApp() {
     style={{
       marginBottom: "15px",
       padding: "12px",
-      width: "100%",
-      border: "1px solid #334155",
+      width: "90%",
+      border: "1px solid #a3c2f8ff",
       borderRadius: "8px",
-      backgroundColor: "#1e293b",
-      color: "#e2e8f0",
+      backgroundColor: "#a3c2f8ff",
+outline: "2px solid #4A90E2",
       fontSize: "14px",
     }}
   />
@@ -176,11 +184,11 @@ export default function IPFSStorageApp() {
     style={{
       marginBottom: "20px",
       padding: "12px",
-      width: "100%",
-      border: "1px solid #334155",
+      width: "90%",
+      border: "1px solid #a3c2f8ff",
       borderRadius: "8px",
-      backgroundColor: "#1e293b",
-      color: "#e2e8f0",
+      backgroundColor: "#a3c2f8ff",
+    outline: "2px solid #4A90E2",
       fontSize: "14px",
     }}
   />
@@ -190,8 +198,8 @@ export default function IPFSStorageApp() {
     onClick={storeDocument}
     style={{
       padding: "12px 24px",
-      backgroundColor: "#3b82f6",
-      color: "#ffffff",
+      backgroundColor: "#ffffff",
+      color: "#3b82f6",
       border: "none",
       borderRadius: "8px",
       cursor: "pointer",
@@ -199,40 +207,35 @@ export default function IPFSStorageApp() {
       fontSize: "15px",
       transition: "background-color 0.3s",
     }}
-    onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#2563eb")}
-    onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#3b82f6")}
   >
     💾 Store Document
   </button>
 </div>
 
-      )}
-
-      {account && (
+    
   <div style={{ marginTop: "40px", textAlign: "center" }}>
-    <h2 style={{ color: "#3b82f6", fontSize: "24px", marginBottom: "20px" }}>
+    <h2 style={{ color: "#3b82f6", fontSize: "24px", marginBottom: "15px", marginTop:"25px"}}>
       📄 Your Documents
     </h2>
 {documents.length === 0 ? (
   <p style={{ color: "#94a3b8" }}>No documents found./Loading....</p>
 ) : (
   <div
-    style={{
-      display: "grid",
-      gridTemplateColumns: "repeat(2, 1fr)", // 2 columns of equal width
-      gap: "20px", // spacing between grid items
-      justifyItems: "center", // center items horizontally inside each grid cell
-    }}
+    class="grid grid-cols-2 gap-5 justify-items-center
+            sm:grid-cols-2
+            md:grid-cols-3
+            lg:grid-cols-4
+            xl:grid-cols-6"
   >
     {documents.map((doc, idx) => (
       <div
         key={idx}
         style={{
-          backgroundColor: "#1e293b",
+          backgroundColor: "#295fdfff",
           borderRadius: "12px",
           padding: "20px",
           maxWidth: "600px",
-          width: "100%", // make sure div takes full column width
+          width: "auto", // make sure div takes full column width
           boxShadow: "0 6px 16px rgba(0, 0, 0, 0.25)",
           textAlign: "left",
           color: "#e2e8f0",
@@ -252,10 +255,10 @@ export default function IPFSStorageApp() {
 />
 
         <p style={{ marginBottom: "8px" }}>
-          <strong style={{ color: "#60a5fa" }}>Title:</strong> {doc.title}
+          <strong style={{ color: "#a3c2f8ff" }}>Title:</strong> {doc.title}
         </p>
         <p style={{ wordBreak: "break-word", marginBottom: "16px" }}>
-          <strong style={{ color: "#60a5fa" }}>IPFS CID:</strong> {doc.encryptedIpfsHash}
+          <strong style={{ color: "#a3c2f8ff" }}>IPFS CID:</strong> {doc.encryptedIpfsHash}
         <button
   onClick={() => {
     navigator.clipboard.writeText(doc.encryptedIpfsHash);
@@ -267,8 +270,9 @@ export default function IPFSStorageApp() {
         <button
           onClick={() => deleteDocument(doc.index)}
           className="px-4 py-2 bg-red-500 text-white border-none rounded-md font-medium cursor-pointer transition-colors duration-300"
-          onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#dc2626")}
-          onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#ef4444")}
+            style={{borderColor:"#9eb5ecff",marginRight:3}}
+          onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#ef4444")}
+          onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#3b82f6")}
         >
           🗑️ Delete
         </button>
@@ -277,6 +281,7 @@ export default function IPFSStorageApp() {
               window.open(`https://gateway.pinata.cloud/ipfs/${doc.encryptedIpfsHash}`, "_blank")
             }
             className="px-4 py-2 bg-blue-600 text-white border-none rounded-md font-medium cursor-pointer transition-colors duration-300"
+            style={{borderColor:"#9eb5ecff",marginLeft:3}}
             onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#2563eb")}
             onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#3b82f6")}
           >
@@ -288,7 +293,7 @@ export default function IPFSStorageApp() {
 )}
 
   </div>
-)}
+
 
     </div>
   );
